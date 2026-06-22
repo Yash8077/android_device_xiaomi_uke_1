@@ -18,19 +18,17 @@ BOARD_PREBUILT_DTBOIMAGE := $(KERNEL_PATH)/dtbo.img
 TARGET_NO_KERNEL_OVERRIDE := true
 LOCAL_KERNEL := $(KERNEL_PATH)/kernel
 PRODUCT_COPY_FILES += \
-	$(LOCAL_KERNEL):kernel
+    $(LOCAL_KERNEL):kernel
 
 # Kernel modules
 DLKM_MODULES_PATH := $(KERNEL_PATH)/modules/vendor
 RAMDISK_MODULES_PATH := $(KERNEL_PATH)/modules/ramdisk
-
 BOARD_VENDOR_KERNEL_MODULES := $(wildcard $(DLKM_MODULES_PATH)/*.ko)
 BOARD_VENDOR_KERNEL_MODULES_LOAD := $(patsubst %,$(DLKM_MODULES_PATH)/%,$(shell cat $(DLKM_MODULES_PATH)/modules.load))
 BOARD_VENDOR_KERNEL_MODULES_BLOCKLIST_FILE := $(DLKM_MODULES_PATH)/modules.blocklist
-
 BOARD_VENDOR_RAMDISK_KERNEL_MODULES := $(wildcard $(RAMDISK_MODULES_PATH)/*.ko)
 BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD := $(patsubst %,$(RAMDISK_MODULES_PATH)/%,$(shell cat $(RAMDISK_MODULES_PATH)/modules.load))
-BOARD_VENDOR_RAMDISK_RECOVERY_KERNEL_MODULES_LOAD  := $(patsubst %,$(RAMDISK_MODULES_PATH)/%,$(shell cat $(RAMDISK_MODULES_PATH)/modules.load.recovery))
+BOARD_VENDOR_RAMDISK_RECOVERY_KERNEL_MODULES_LOAD := $(patsubst %,$(RAMDISK_MODULES_PATH)/%,$(shell cat $(RAMDISK_MODULES_PATH)/modules.load.recovery))
 BOARD_VENDOR_RAMDISK_KERNEL_MODULES_BLOCKLIST_FILE := $(RAMDISK_MODULES_PATH)/modules.blocklist
 
 # Properties
@@ -42,3 +40,18 @@ TARGET_KERNEL_SOURCE := $(KERNEL_PATH)/kernel-headers
 
 # Inherit the proprietary files
 include vendor/xiaomi/uke/BoardConfigVendor.mk
+
+# ---------------------------------------------------------------------------
+# TWRP-specific additions (not present upstream — added for the twrp_uke
+# build target only; these don't affect the lineage_uke ROM build target)
+# ---------------------------------------------------------------------------
+TW_THEME := portrait_hdpi
+TW_INCLUDE_REPACKTOOLS := true
+TW_EXCLUDE_DEFAULT_USB_INIT := true
+TW_USE_TOOLBOX := true
+TARGET_USES_LOGD := true
+RECOVERY_SDCARD_ON_DATA := true
+
+# This device has its own /recovery partition (see fstab.qcom) rather than
+# recovery-as-boot, so the standard recoveryimage target applies.
+BOARD_USES_RECOVERY_AS_BOOT := false
