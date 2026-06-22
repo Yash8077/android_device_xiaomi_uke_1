@@ -8,6 +8,7 @@
 # (which is identical either way) and define the rest ourselves.
 #
 
+$(call inherit-product, vendor/twrp/config/common.mk)
 $(call inherit-product, device/xiaomi/uke/device.mk)
 
 PRODUCT_NAME := twrp_uke

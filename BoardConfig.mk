@@ -41,10 +41,8 @@ TARGET_KERNEL_SOURCE := $(KERNEL_PATH)/kernel-headers
 # Inherit the proprietary files
 include vendor/xiaomi/uke/BoardConfigVendor.mk
 
-# ---------------------------------------------------------------------------
-# TWRP-specific additions (not present upstream — added for the twrp_uke
-# build target only; these don't affect the lineage_uke ROM build target)
-# ---------------------------------------------------------------------------
+ifeq ($(TARGET_PRODUCT),twrp_uke)
+# TWRP
 TW_THEME := portrait_hdpi
 TW_INCLUDE_REPACKTOOLS := true
 TW_EXCLUDE_DEFAULT_USB_INIT := true
@@ -52,6 +50,6 @@ TW_USE_TOOLBOX := true
 TARGET_USES_LOGD := true
 RECOVERY_SDCARD_ON_DATA := true
 
-# This device has its own /recovery partition (see fstab.qcom) rather than
-# recovery-as-boot, so the standard recoveryimage target applies.
+# uke has a dedicated A/B recovery partition.
 BOARD_USES_RECOVERY_AS_BOOT := false
+endif

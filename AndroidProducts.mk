@@ -6,3 +6,7 @@
 PRODUCT_MAKEFILES := \
     $(LOCAL_DIR)/lineage_uke.mk \
     $(LOCAL_DIR)/twrp_uke.mk
+
+COMMON_LUNCH_CHOICES := \
+    lineage_uke-userdebug \
+    twrp_uke-eng
